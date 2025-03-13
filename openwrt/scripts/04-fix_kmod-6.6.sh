@@ -1,23 +1,20 @@
 #!/bin/bash -e
 
-# Fix build for linux-6.6/6.12
+# Fix build for 6.12
 
 # cryptodev-linux
 #mkdir -p package/kernel/cryptodev-linux/patches
-#curl -s $mirror/openwrt/patch/packages-patches/cryptodev-linux/6.6/001-Fix-build-for-Linux-6.3-rc1.patch > package/kernel/cryptodev-linux/patches/001-Fix-build-for-Linux-6.3-rc1.patch
-#curl -s $mirror/openwrt/patch/packages-patches/cryptodev-linux/6.6/002-fix-build-for-linux-6.7-rc1.patch > package/kernel/cryptodev-linux/patches/002-fix-build-for-linux-6.7-rc1.patch
+#curl -s $mirror/openwrt/patch/packages-patches/cryptodev-linux/6.12/0005-Fix-cryptodev_verbosity-sysctl-for-Linux-6.11-rc1.patch > package/kernel/cryptodev-linux/patches/0005-Fix-cryptodev_verbosity-sysctl-for-Linux-6.11-rc1.patch
+#curl -s $mirror/openwrt/patch/packages-patches/cryptodev-linux/6.12/0006-Exclude-unused-struct-since-Linux-6.5.patch > package/kernel/cryptodev-linux/patches/0006-Exclude-unused-struct-since-Linux-6.5.patch
 
 # gpio-button-hotplug
-#curl -s $mirror/openwrt/patch/packages-patches/gpio-button-hotplug/fix-linux-6.6.patch | patch -p1  #失败
 #curl -s $mirror/openwrt/patch/packages-patches/gpio-button-hotplug/fix-linux-6.12.patch | patch -p1
 
 # jool
-#curl -s $mirror/openwrt/patch/packages-patches/jool/Makefile > feeds/packages/net/jool/Makefile  #编译错误
+#curl -s $mirror/openwrt/patch/packages-patches/jool/Makefile > feeds/packages/net/jool/Makefile
 
 # ovpn-dco
 #mkdir -p feeds/packages/kernel/ovpn-dco/patches
-#curl -s $mirror/openwrt/patch/packages-patches/ovpn-dco/100-ovpn-dco-adapt-pre-post_doit-CBs-to-new-signature.patch > feeds/packages/kernel/ovpn-dco/patches/100-ovpn-dco-adapt-pre-post_doit-CBs-to-new-signature.patch
-#curl -s $mirror/openwrt/patch/packages-patches/ovpn-dco/900-fix-linux-6.6.patch > feeds/packages/kernel/ovpn-dco/patches/900-fix-linux-6.6.patch
 #curl -s $mirror/openwrt/patch/packages-patches/ovpn-dco/901-fix-linux-6.11.patch > feeds/packages/kernel/ovpn-dco/patches/901-fix-linux-6.11.patch
 #curl -s $mirror/openwrt/patch/packages-patches/ovpn-dco/902-fix-linux-6.12.patch > feeds/packages/kernel/ovpn-dco/patches/902-fix-linux-6.12.patch
 

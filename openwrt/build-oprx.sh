@@ -270,7 +270,7 @@ fi
 echo -e "\n${GREEN_COLOR}Patching ...${RES}\n"
 
 # scripts
-curl -sO $mirror/openwrt/scripts/00-prepare_base-yaof.sh
+curl -sO $mirror/openwrt/scripts/000-prepare_base-yaof.sh
 curl -sO $mirror/openwrt/scripts/00-prepare_base-6.6.sh
 curl -sO $mirror/openwrt/scripts/01-prepare_base-mainline-6.6.sh
 curl -sO $mirror/openwrt/scripts/02-prepare_package-6.6.sh
@@ -286,7 +286,7 @@ else
 fi
 chmod 0755 *sh
 [ "$(whoami)" = "runner" ] && group "patching openwrt"
-bash 00-prepare_base-yaof.sh
+bash 000-prepare_base-yaof.sh
 bash 00-prepare_base-6.6.sh
 bash 01-prepare_base-mainline-6.6.sh
 bash 02-prepare_package-6.6.sh
@@ -417,7 +417,7 @@ if [ "$BUILD_FAST" = "y" ]; then
     if [ "$PLATFORM_ID" = "platform:el9" ]; then
         TOOLCHAIN_URL="http://127.0.0.1:8080"
     else
-        TOOLCHAIN_URL=https://"$github_proxy"github.com/ilxp/openwrt_caches-6.6/releases/download/openwrt-24.10
+        TOOLCHAIN_URL=https://"$github_proxy"github.com/ilxp/openwrt_caches/releases/download/openwrt-24.10
     fi
     curl -L ${TOOLCHAIN_URL}/toolchain_${LIBC}_${toolchain_arch}_gcc-${gcc_version}${tools_suffix}.tar.zst -o toolchain.tar.zst $CURL_BAR
     echo -e "\n${GREEN_COLOR}Process Toolchain ...${RES}"

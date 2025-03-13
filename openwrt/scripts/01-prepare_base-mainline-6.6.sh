@@ -5,7 +5,7 @@
 # autocore
 git clone https://$github/sbwml/autocore-arm -b openwrt-24.10 package/system/autocore
 
-# rockchip - target - r4s/r5s only
+# rockchip - target - r4s/r5s only  #已经在000-prepare_base-yaof.sh中执行
 #rm -rf target/linux/rockchip
 #if [ "$(whoami)" = "sbwml" ]; then
     #git clone https://$gitea/sbwml/target_linux_rockchip-6.x target/linux/rockchip -b openwrt-24.10
@@ -49,7 +49,7 @@ curl -s $mirror/openwrt/patch/openwrt-6.x/x86/base-files/etc/board.d/02_network 
 
 # kenrel Vermagic
 sed -ie 's/^\(.\).*vermagic$/\1cp $(TOPDIR)\/.vermagic $(LINUX_DIR)\/.vermagic/' include/kernel-defaults.mk
-grep HASH include/kernel-6.6 | awk -F'HASH-' '{print $2}' | awk '{print $1}' | md5sum | awk '{print $1}' > .vermagic
+grep HASH include/kernel-$kernel_version | awk -F'HASH-' '{print $2}' | awk '{print $1}' | md5sum | awk '{print $1}' > .vermagic
 
 # kernel generic patches
 #curl -s $mirror/openwrt/patch/kernel-6.12/openwrt/linux-6.12-target-linux-generic.patch | patch -p1
@@ -103,7 +103,7 @@ pushd package/kernel/linux/modules
     curl -Os $mirror/openwrt/patch/openwrt-6.x/modules/wpan.mk
 popd
 
-# BBRv3 - linux-6.12
+# BBRv3 - linux-6.12  #已经在000-prepare_base-yaof.sh中执行
 #pushd target/linux/generic/backport-6.12
     #curl -Os $mirror/openwrt/patch/kernel-6.12/bbr3/010-bbr3-0001-net-tcp_bbr-broaden-app-limited-rate-sample-detectio.patch
     #curl -Os $mirror/openwrt/patch/kernel-6.12/bbr3/010-bbr3-0002-net-tcp_bbr-v2-shrink-delivered_mstamp-first_tx_msta.patch
@@ -126,7 +126,7 @@ popd
     #curl -Os $mirror/openwrt/patch/kernel-6.12/bbr3/010-bbr3-0019-x86-cfi-bpf-Add-tso_segs-and-skb_marked_lost-to-bpf_.patch
 #popd
 
-# LRNG - 6.12
+# LRNG - 6.12 #已经在000-prepare_base-yaof.sh中执行
 #pushd target/linux/generic/hack-6.12
     #curl -Os $mirror/openwrt/patch/kernel-6.12/lrng/011-LRNG-0001-LRNG-Entropy-Source-and-DRNG-Manager.patch
     #curl -Os $mirror/openwrt/patch/kernel-6.12/lrng/011-LRNG-0002-LRNG-allocate-one-DRNG-instance-per-NUMA-node.patch
@@ -155,7 +155,7 @@ popd
     #curl -Os $mirror/openwrt/patch/kernel-6.12/lrng/011-LRNG-0025-LRNG-add-hwrand-framework-interface.patch
 #popd
 
-# linux-rt - i915
+# linux-rt - i915 #不需要
 #pushd target/linux/generic/hack-6.12
     #curl -Os $mirror/openwrt/patch/kernel-6.12/linux-rt/012-0001-drm-i915-Use-preempt_disable-enable_rt-where-recomme.patch
     #curl -Os $mirror/openwrt/patch/kernel-6.12/linux-rt/012-0002-drm-i915-Don-t-disable-interrupts-on-PREEMPT_RT-duri.patch
@@ -176,7 +176,7 @@ curl -s $mirror/openwrt/patch/iproute2/902-ss-display-ecn_low-if-tcp_info-tcpi_o
 rm -rf package/firmware/linux-firmware
 git clone https://$github/sbwml/package_firmware_linux-firmware package/firmware/linux-firmware
 
-# mt76
+# mt76 #编译不成功
 #mkdir -p package/kernel/mt76/patches
 #curl -s $mirror/openwrt/patch/mt76/Makefile > package/kernel/mt76/Makefile
 #curl -s $mirror/openwrt/patch/mt76/patches/100-fix-build-with-mac80211-6.11-backport.patch > package/kernel/mt76/patches/100-fix-build-with-mac80211-6.11-backport.patch
@@ -185,7 +185,7 @@ git clone https://$github/sbwml/package_firmware_linux-firmware package/firmware
 # wireless-regdb
 curl -s $mirror/openwrt/patch/openwrt-6.x/500-world-regd-5GHz.patch > package/firmware/wireless-regdb/patches/500-world-regd-5GHz.patch
 
-# mac80211 - 6.11
+# mac80211 - 6.11  #编译不成功
 #rm -rf package/kernel/mac80211
 #git clone https://$github/sbwml/package_kernel_mac80211 package/kernel/mac80211 -b openwrt-24.10
 
@@ -193,7 +193,7 @@ curl -s $mirror/openwrt/patch/openwrt-6.x/500-world-regd-5GHz.patch > package/fi
 rm -rf package/kernel/ath10k-ct
 git clone https://$github/sbwml/package_kernel_ath10k-ct package/kernel/ath10k-ct -b v6.11
 
-# kernel patch
+# kernel patch  #已经在000-prepare_base-yaof.sh中执行
 # btf: silence btf module warning messages
 #curl -s $mirror/openwrt/patch/kernel-6.12/btf/990-btf-silence-btf-module-warning-messages.patch > target/linux/generic/hack-6.12/990-btf-silence-btf-module-warning-messages.patch
 # cpu model

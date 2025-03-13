@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-# Rockchip - rkbin & u-boot
+# Rockchip - rkbin & u-boot  #已经在000-prepare_base-yaof.sh中执行
 #rm -rf package/boot/rkbin package/boot/uboot-rockchip package/boot/arm-trusted-firmware-rockchip
 #if [ "$platform" = "rk3568" ]; then
     #git clone https://$github/sbwml/package_boot_uboot-rockchip package/boot/uboot-rockchip
@@ -104,7 +104,7 @@ git clone https://$github/sbwml/package_utils_util-linux -b openwrt-24.10 packag
 # Shortcut Forwarding Engine
 git clone https://$gitea/sbwml/shortcut-fe package/new/shortcut-fe
 
-# Patch FireWall 4
+# Patch FireWall 4  #已经在000-prepare_base-yaof.sh中执行
 #if [ "$version" = "dev" ] || [ "$version" = "rc2" ]; then
     # firewall4
     #sed -i 's|$(PROJECT_GIT)/project|https://github.com/openwrt|g' package/network/config/firewall4/Makefile
@@ -142,7 +142,7 @@ git clone https://$github/sbwml/packages_new_nat6 package/new/nat6
 git clone https://$github/sbwml/package_new_natflow package/new/natflow
 
 # Patch Luci add nft_fullcone/bcm_fullcone & shortcut-fe & natflow & ipv6-nat & custom nft command option
-pushd feeds/luci
+pushd feeds/luci  #已经在000-prepare_base-yaof.sh中执行
     #curl -s $mirror/openwrt/patch/firewall4/luci-24.10/0001-luci-app-firewall-add-nft-fullcone-and-bcm-fullcone-.patch | patch -p1
     #curl -s $mirror/openwrt/patch/firewall4/luci-24.10/0002-luci-app-firewall-add-shortcut-fe-option.patch | patch -p1
     #curl -s $mirror/openwrt/patch/firewall4/luci-24.10/0003-luci-app-firewall-add-ipv6-nat-option.patch | patch -p1
@@ -238,7 +238,7 @@ pushd feeds/packages
     curl -s $mirror/openwrt/patch/docker/0003-dockerd-disable-ip6tables-for-bridge-network-by-defa.patch | patch -p1
 popd
 
-# cgroupfs-mount
+# cgroupfs-mount  #已经在000-prepare_base-yaof.sh中执行
 # fix unmount hierarchical mount
 #pushd feeds/packages
     #curl -s $mirror/openwrt/patch/cgroupfs-mount/0001-fix-cgroupfs-mount.patch | patch -p1
