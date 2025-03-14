@@ -484,9 +484,11 @@ git clone https://github.com/esirplayground/luci-app-poweroff package/diy/luci-a
 sed -i 's/PowerOff/关机/g' package/diy/luci-app-poweroff/luasrc/controller/poweroff.lua
 
 #家长控制（会生成Control管控栏目） #无法运行
-git clone https://github.com/sirpdboy/luci-app-parentcontrol package/diy/luci-app-parentcontrol
+#git clone https://github.com/sirpdboy/luci-app-parentcontrol package/diy/luci-app-parentcontrol
+git clone https://github.com/ilxp/luci-app-parentcontrol package/diy/luci-app-parentcontrol
 sed -i 's/Parent Control/家长控制/g' package/diy/luci-app-parentcontrol/luasrc/controller/parentcontrol.lua
 sed -i 's/Control/管控/g' package/diy/luci-app-parentcontrol/luasrc/controller/parentcontrol.lua
+
 
 #自动扩容分区
 git clone https://github.com/sirpdboy/luci-app-partexp package/diy/luci-app-partexp
@@ -656,12 +658,14 @@ sed -i 's/App Filter/应用过滤/g' package/diy/OpenAppFilter/luci-app-oaf/luas
 
 #2、管控
 rm -rf feeds/luci/applications/luci-app-control-webrestriction
+rm -rf feeds/luci/applications/luci-app-accesscontrol
 rm -rf feeds/luci/applications/luci-app-control-timewol
 rm -rf feeds/luci/applications/luci-app-control-weburl
 rm -rf feeds/luci/applications/luci-app-timecontrol
 rm -rf feeds/luci/applications/luci-app-filebrowser
 rm -rf feeds/luci/applications/luci-app-openvpn-server  #采用lienol的，会生成一个vpn的栏目
 
+#zxlhhyccc大佬的 修复无法运行问题。
 #网络唤醒plus
 #git clone -b master --single-branch https://github.com/zxlhhyccc/bf-package-master.git   package/wolplus
 #cd package/wolplus
@@ -675,8 +679,10 @@ rm -rf feeds/luci/applications/luci-app-openvpn-server  #采用lienol的，会�
 #rm -rf LICENSE
 #cd ../..
 
-merge_package master https://github.com/zxlhhyccc/bf-package-master.git package/new zxlhhyccc/luci-app-wolplus zxlhhyccc/luci-app-control-webrestriction
-sed -i 's/Control/管控/g' package/new/luci-app-control-webrestriction/luasrc/controller/webrestriction.lua
+#时间控制accesscontrol,timecontrol网络唤醒wolplus，访问限制webrestriction， 过滤控制weburl
+merge_package master https://github.com/zxlhhyccc/bf-package-master.git package/new zxlhhyccc/luci-app-wolplus lean/luci-app-accesscontrol zxlhhyccc/luci-app-control-webrestriction
+sed -i 's/services/control/g' package/new/luci-app-accesscontrol/luasrc/controller/mia.lua
+sed -i 's/Internet Access Schedule Control/上网时间控制/g' package/new/luci-app-accesscontrol/luasrc/controller/mia.lua
 
 
 #lienol大神的管控\文件浏览器
@@ -698,19 +704,21 @@ sed -i 's/Control/管控/g' package/new/luci-app-control-webrestriction/luasrc/c
 #sed -i 's/Control/管控/g' package/lienol/luci-app-control-timewol/luasrc/controller/timewol.lua
 #sed -i 's/File Browser/文件浏览器/g' package/lienol/luci-app-filebrowser/luasrc/controller/filebrowser.lua
 
-merge_package main https://github.com/Lienol/openwrt-package.git package/new luci-app-control-webrestriction luci-app-control-weburl luci-app-control-timewol luci-app-filebrowser luci-app-openvpn-server
-sed -i 's/Access Control/访问限制/g' package/new/luci-app-control-webrestriction/luasrc/controller/webrestriction.lua
-sed -i 's/Control/管控/g' package/new/luci-app-control-webrestriction/luasrc/controller/webrestriction.lua
-sed -i 's/Control/管控/g' package/new/luci-app-control-weburl/luasrc/controller/weburl.lua
+#merge_package main https://github.com/Lienol/openwrt-package.git package/new luci-app-control-webrestriction luci-app-control-weburl luci-app-timecontrol luci-app-control-timewol luci-app-filebrowser luci-app-openvpn-server
+#sed -i 's/Access Control/访问限制/g' package/new/luci-app-control-webrestriction/luasrc/controller/webrestriction.lua
+#sed -i 's/Control/管控/g' package/new/luci-app-control-webrestriction/luasrc/controller/webrestriction.lua
+#sed -i 's/Control/管控/g' package/new/luci-app-control-weburl/luasrc/controller/weburl.lua
 #sed -i 's/Internet Time Control/上网时间控制/g' package/new/luci-app-timecontrol/luasrc/controller/timecontrol.lua
 #sed -i 's/Control/管控/g' package/new/luci-app-timecontrol/luasrc/controller/timecontrol.lua
-sed -i 's/Control/管控/g' package/new/luci-app-control-timewol/luasrc/controller/timewol.lua
-sed -i 's/File Browser/文件浏览器/g' package/new/luci-app-filebrowser/luasrc/controller/filebrowser.lua
+#sed -i 's/Control/管控/g' package/new/luci-app-control-timewol/luasrc/controller/timewol.lua
+#sed -i 's/File Browser/文件浏览器/g' package/new/luci-app-filebrowser/luasrc/controller/filebrowser.lua
 
-#采用lean的上网时间控制
-merge_package openwrt-23.05 https://github.com/coolsnowwolf/luci.git  package/new applications/luci-app-accesscontrol
-sed -i 's/services/control/g' package/new/luci-app-accesscontrol/luasrc/controller/mia.lua
-sed -i 's/Internet Access Schedule Control/上网时间控制/g' package/new/luci-app-accesscontrol/luasrc/controller/mia.lua
+#采用lean的上网时间控制（23.05分支luci一直显示收集信息） 采用timecontrol
+#rm -rf feeds/luci/applications/luci-app-accesscontrol
+#sed -i 's/services/control/g' feeds/luci/applications/luci-app-accesscontrol/luasrc/controller/mia.lua
+#merge_package openwrt-23.05 https://github.com/coolsnowwolf/luci.git  package/new applications/luci-app-accesscontrol
+#sed -i 's/services/control/g' package/new/luci-app-accesscontrol/luasrc/controller/mia.lua
+#sed -i 's/Internet Access Schedule Control/上网时间控制/g' package/new/luci-app-accesscontrol/luasrc/controller/mia.lua
 
 #八、其他luci-app
 #1、turboacc去dns
