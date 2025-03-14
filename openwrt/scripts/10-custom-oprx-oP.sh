@@ -471,10 +471,11 @@ sed -i 's/wan_interface 'eth1'/wan_interface 'eth0'/g' package/diy/luci-app-netw
 git clone https://github.com/sirpdboy/netspeedtest.git package/diy/netspeedtest
 sed -i 's/Net Speedtest/网络测速/g' package/diy/netspeedtest/luci-app-netspeedtest/luasrc/controller/netspeedtest.lua
 
-#定时设置
+#定时设置（会生成Control管控栏目）
 rm -rf package/sirpdboy/luci-app-autotimeset
 git clone https://github.com/sirpdboy/luci-app-autotimeset package/diy/luci-app-autotimeset
 sed -i 's/Scheduled Setting/定时设置/g' package/diy/luci-app-autotimeset/luasrc/controller/autotimeset.lua
+sed -i 's/Control/管控/g' package/diy/luci-app-autotimeset/luasrc/controller/autotimeset.lua
 
 #关机  编译不成功采用esir的
 #git clone https://github.com/sirpdboy/luci-app-poweroffdevice package/diy/luci-app-poweroffdevice
@@ -482,7 +483,7 @@ sed -i 's/Scheduled Setting/定时设置/g' package/diy/luci-app-autotimeset/lua
 git clone https://github.com/esirplayground/luci-app-poweroff package/diy/luci-app-poweroff
 sed -i 's/PowerOff/关机/g' package/diy/luci-app-poweroff/luasrc/controller/poweroff.lua
 
-#家长控制
+#家长控制（会生成Control管控栏目） #无法运行
 git clone https://github.com/sirpdboy/luci-app-parentcontrol package/diy/luci-app-parentcontrol
 sed -i 's/Parent Control/家长控制/g' package/diy/luci-app-parentcontrol/luasrc/controller/parentcontrol.lua
 sed -i 's/Control/管控/g' package/diy/luci-app-parentcontrol/luasrc/controller/parentcontrol.lua
@@ -674,7 +675,9 @@ rm -rf feeds/luci/applications/luci-app-openvpn-server  #采用lienol的，会�
 #rm -rf LICENSE
 #cd ../..
 
-merge_package master https://github.com/zxlhhyccc/bf-package-master.git package/new zxlhhyccc/luci-app-wolplus
+merge_package master https://github.com/zxlhhyccc/bf-package-master.git package/new zxlhhyccc/luci-app-wolplus zxlhhyccc/luci-app-control-webrestriction
+sed -i 's/Control/管控/g' package/new/luci-app-control-webrestriction/luasrc/controller/webrestriction.lua
+
 
 #lienol大神的管控\文件浏览器
 #git clone -b main --single-branch https://github.com/Lienol/openwrt-package.git   package/lienol
@@ -724,11 +727,7 @@ rm -rf feeds/luci/applications/luci-app-turboacc
 #rm -rf LICENSE
 #cd ../..
 
-#merge_package master https://github.com/xiangfeidexiaohuo/openwrt-packages.git package/new patch/luci-app-turboacc
-#适配官方openwrt(22.03/23.05/24.10) firewall4的turboacc
-merge_package luci https://github.com/chenmozhijin/turboacc.git package/turboacc luci-app-turboacc
-#修改 bbr为bbr3
-sed -i 's/kmod-tcp-bbr/kmod-tcp-bbr3/g' package/turboacc/luci-app-turboacc/Makefile
+merge_package master https://github.com/xiangfeidexiaohuo/openwrt-packages.git package/new patch/luci-app-turboacc
 
 #2、京东签到 By Jerrykuku 作者已关闭了
 #git clone --depth 1 https://github.com/jerrykuku/node-request.git package/new/node-request
@@ -857,7 +856,8 @@ merge_package master https://github.com/lisaac/luci-app-diskman.git package/new 
 
 #13、lan口设置  不能在workflow上打。（yaof上能打成功patch，sbwml上不成功【再01-prepare_base-mainline.sh中查找02_network即可明白】）
 #rm -rf target/linux/x86/base-files/etc/board.d/02_network  #清除patche复制过去的02，需要lede的或者官方原版的才能patche成功。
-#wget -N https://raw.githubusercontent.com/coolsnowwolf/lede/master/target/linux/x86/base-files/etc/board.d/02_network -P target/linux/x86/base-files/etc/board.d/
+##wget -N https://raw.githubusercontent.com/coolsnowwolf/lede/master/target/linux/x86/base-files/etc/board.d/02_network -P target/linux/x86/base-files/etc/board.d/
+#wget -N https://raw.githubusercontent.com/openwrt/openwrt/openwrt-23.05/target/linux/x86/base-files/etc/board.d/02_network -P target/linux/x86/base-files/etc/board.d/
 #patch -p1 <./diydata/data/patches/def_set_interfaces_lan_wan.patch
 
 #14、chatgpt
