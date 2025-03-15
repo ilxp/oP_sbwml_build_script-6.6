@@ -103,7 +103,6 @@ cp -f ./diydata/data/default-settings-oR package/new/addition-trans-zh/files/zzz
 rm -rf package/kernel/rtl8812au-ct
 #清除失败的patch
 rm -rf target/linux/generic/pending-6.6/999-net-net-fix-data-races-around-sk--sk_forward_alloc.patch
-rm -rf ./target/linux/generic/pending-6.6/999-net-net-fix-data-races-around-sk--sk_forward_alloc.patch
 rm -rf feeds/packages/net/jool
 
 #luci-ssl替换mbedtls
