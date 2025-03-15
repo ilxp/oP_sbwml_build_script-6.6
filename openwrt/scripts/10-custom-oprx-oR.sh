@@ -690,6 +690,8 @@ rm -rf feeds/luci/applications/luci-app-turboacc
 
 #适配官方openwrt(22.03/23.05/24.10) firewall4的turboacc 【lede不能使用】
 merge_package luci https://github.com/chenmozhijin/turboacc.git package/turboacc luci-app-turboacc
+#修改 bbr为bbr3
+sed -i 's/kmod-tcp-bbr/kmod-tcp-bbr3/g' package/turboacc/luci-app-turboacc/Makefile
 
 #2、京东签到 By Jerrykuku 作者已关闭了
 #git clone --depth 1 https://github.com/jerrykuku/node-request.git package/new/node-request
@@ -720,6 +722,7 @@ rm -Rf feeds/luci/applications/luci-app-zerotier
 rm -Rf feeds/packages/net/zerotier  #lede的版本新
 merge_package master https://github.com/coolsnowwolf/packages.git feeds/packages/net net/zerotier
 rm -Rf package/new/custom/luci-app-zerotier
+rm -Rf package/new/luci-app-zerotier
 merge_package main https://github.com/sbwml/openwrt_pkgs.git package/new luci-app-zerotier
 #移动搭配vpn栏目
 sed -i 's/services/vpn/g' package/new/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json
@@ -761,20 +764,20 @@ sed -i 's/\/bin\/bash/\/usr\/bin\/zsh/g' package/base-files/files/etc/passwd
 #rm -rf ./feeds/luci/collections/luci-lib-docker
 #merge_package master https://github.com/lisaac/luci-lib-docker.git package/new collections/luci-lib-docker
 
-# sbwml大神
-rm -rf feeds/luci/applications/luci-app-dockerman
-git clone https://git.cooluc.com/sbwml/luci-app-dockerman -b openwrt-23.05 feeds/luci/applications/luci-app-dockerman
-rm -rf feeds/packages/utils/{docker,dockerd,containerd,runc}
-git clone https://github.com/sbwml/packages_utils_docker feeds/packages/utils/docker
-git clone https://github.com/sbwml/packages_utils_dockerd feeds/packages/utils/dockerd
-git clone https://github.com/sbwml/packages_utils_containerd feeds/packages/utils/containerd
-git clone https://github.com/sbwml/packages_utils_runc feeds/packages/utils/runc
-sed -i '/sysctl.d/d' feeds/packages/utils/dockerd/Makefile
-pushd feeds/packages
-patch -p1 <../.././diydata/data/patches/docker/0001-dockerd-fix-bridge-network.patch
-patch -p1 <../.././diydata/data/patches/docker/0002-docker-add-buildkit-experimental-support.patch
-patch -p1 <../.././diydata/data/patches/docker/0003-dockerd-disable-ip6tables-for-bridge-network-by-defa.patch
-popd
+# sbwml大神 【00-prepare_base-6.6已经有了】
+#rm -rf feeds/luci/applications/luci-app-dockerman
+#git clone https://git.cooluc.com/sbwml/luci-app-dockerman -b openwrt-23.05 feeds/luci/applications/luci-app-dockerman
+#rm -rf feeds/packages/utils/{docker,dockerd,containerd,runc}
+#git clone https://github.com/sbwml/packages_utils_docker feeds/packages/utils/docker
+#git clone https://github.com/sbwml/packages_utils_dockerd feeds/packages/utils/dockerd
+#git clone https://github.com/sbwml/packages_utils_containerd feeds/packages/utils/containerd
+#git clone https://github.com/sbwml/packages_utils_runc feeds/packages/utils/runc
+#sed -i '/sysctl.d/d' feeds/packages/utils/dockerd/Makefile
+#pushd feeds/packages
+#patch -p1 <../.././diydata/data/patches/docker/0001-dockerd-fix-bridge-network.patch
+#patch -p1 <../.././diydata/data/patches/docker/0002-docker-add-buildkit-experimental-support.patch
+#patch -p1 <../.././diydata/data/patches/docker/0003-dockerd-disable-ip6tables-for-bridge-network-by-defa.patch
+#popd
 
 #9、全能推送（商店自己安装）
 #rm -rf feeds/luci/applications/luci-app-pushbot
