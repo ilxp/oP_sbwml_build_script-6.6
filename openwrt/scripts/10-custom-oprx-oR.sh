@@ -103,6 +103,7 @@ cp -f ./diydata/data/default-settings-oR package/new/addition-trans-zh/files/zzz
 rm -rf package/kernel/rtl8812au-ct
 #清除失败的patch
 rm -rf target/linux/generic/pending-6.6/999-net-net-fix-data-races-around-sk--sk_forward_alloc.patch
+rm -rf ./target/linux/generic/pending-6.6/999-net-net-fix-data-races-around-sk--sk_forward_alloc.patch
 rm -rf feeds/packages/net/jool
 
 #luci-ssl替换mbedtls
@@ -516,10 +517,10 @@ git clone https://github.com/sirpdboy/luci-app-advanced.git package/diy/luci-app
 
 ##五）QOS相关
 #石像鬼qos采用我自己的，会有一个QOS栏目生成
-git clone -b openwrt-2305 https://github.com/ilxp/gargoyle-qos-openwrt.git  package/diy/gargoyle-qos-openwrt
-sed -i 's/Gargoyle QoS/石像鬼 QoS/g' package/diy/gargoyle-qos-openwrt/luci-app-qos-gargoyle/luasrc/controller/qos_gargoyle.lua
-sed -i 's/Download Settings/下载设置/g' package/diy/gargoyle-qos-openwrt/luci-app-qos-gargoyle/luasrc/controller/qos_gargoyle.lua
-sed -i 's/Upload Settings/上传设置/g' package/diy/gargoyle-qos-openwrt/luci-app-qos-gargoyle/luasrc/controller/qos_gargoyle.lua
+#git clone -b openwrt-2305 https://github.com/ilxp/gargoyle-qos-openwrt.git  package/diy/gargoyle-qos-openwrt
+#sed -i 's/Gargoyle QoS/石像鬼 QoS/g' package/diy/gargoyle-qos-openwrt/luci-app-qos-gargoyle/luasrc/controller/qos_gargoyle.lua
+#sed -i 's/Download Settings/下载设置/g' package/diy/gargoyle-qos-openwrt/luci-app-qos-gargoyle/luasrc/controller/qos_gargoyle.lua
+#sed -i 's/Upload Settings/上传设置/g' package/diy/gargoyle-qos-openwrt/luci-app-qos-gargoyle/luasrc/controller/qos_gargoyle.lua
 #wget -qO - https://raw.gitmirror.com/ilxp/gargoyle-qos-openwrt/openwrt-2203/010-revert_to_iptables.patch | patch -p1  #去除firwall4，用3
 
 #2）eqos，采用luci自带的即可。把eqos放在管控下。不在列入Qos目录下
@@ -718,11 +719,13 @@ git clone -b master --depth 1 https://github.com/brvphoenix/luci-app-wrtbwmon.gi
 #6、zerotier #lede自带的已经是在vpn栏目
 rm -Rf feeds/luci/applications/luci-app-zerotier
 rm -Rf feeds/packages/net/zerotier  #lede的版本新
-merge_package master https://github.com/coolsnowwolf/packages.git package/new net/zerotier
+merge_package master https://github.com/coolsnowwolf/packages.git feeds/packages/net net/zerotier
 rm -Rf package/new/custom/luci-app-zerotier
 merge_package main https://github.com/sbwml/openwrt_pkgs.git package/new luci-app-zerotier
 #移动搭配vpn栏目
 sed -i 's/services/vpn/g' package/new/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json
+
+#sed -i 's/services/vpn/g' package/new/custom/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json
 
 #7、终端ZSH工具
 # DHDAXCW骷髅头的preset-terminal-tools.sh
