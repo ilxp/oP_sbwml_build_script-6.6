@@ -33,10 +33,10 @@ ip_info=`curl -sk https://ip.cooluc.com`;
 # script url
 if [ "$isCN" = "CN" ]; then
     #export mirror=https://init.cooluc.com
-	export mirror=https://raw.githubusercontent.com/ilxp/oP_sbwml_build_script-6.6/main
+	export mirror=https://raw.githubusercontent.com/ilxp/oR_sbwml_build_script/main
 else
     #export mirror=https://init2.cooluc.com
-    export mirror=https://raw.githubusercontent.com/ilxp/oP_sbwml_build_script-6.6/main
+    export mirror=https://raw.githubusercontent.com/ilxp/oR_sbwml_build_script/main
 fi
 
 # github actions - automatically retrieve `github raw` links
@@ -282,7 +282,7 @@ if [ -n "$git_password" ] && [ -n "$private_url" ]; then
     curl -u openwrt:$git_password -sO "$private_url"
 else
     curl -sO $mirror/openwrt/scripts/10-custom.sh
-	curl -sO $mirror/openwrt/scripts/10-custom-oprx-oP.sh
+	curl -sO $mirror/openwrt/scripts/10-custom-oprx-oR.sh
 fi
 chmod 0755 *sh
 [ "$(whoami)" = "runner" ] && group "patching openwrt"
@@ -294,7 +294,7 @@ bash 03-convert_translation.sh
 bash 04-fix_kmod-6.6.sh
 bash 05-fix-source-6.6.sh
 [ -f "10-custom.sh" ] && bash 10-custom.sh
-[ -f "10-custom-oprx-oP.sh" ] && bash 10-custom-oprx-oP.sh
+[ -f "10-custom-oprx-oP.sh" ] && bash 10-custom-oprx-oR.sh
 find feeds -type f -name "*.orig" -exec rm -f {} \;
 [ "$(whoami)" = "runner" ] && endgroup
 
@@ -303,7 +303,8 @@ rm -rf ../master
 
 # Load devices Config
 if [ "$platform" = "x86_64" ]; then
-    curl -s $mirror/openwrt/configs/24-config-musl-x86-oprx > .config
+    #curl -s $mirror/openwrt/configs/24-config-musl-x86 > .config
+	curl -s $mirror/openwrt/configs/24-config-musl-x86-oprx > .config
 elif [ "$platform" = "bcm53xx" ]; then
     if [ "$MINIMAL_BUILD" = "y" ]; then
         curl -s $mirror/openwrt/configs/24-config-musl-r8500-minimal > .config
@@ -324,7 +325,8 @@ if [ "$MINIMAL_BUILD" = "y" ]; then
     [ "$platform" != "bcm53xx" ] && curl -s $mirror/openwrt/configs/24-config-minimal-common >> .config
     echo 'VERSION_TYPE="minimal"' >> package/base-files/files/usr/lib/os-release
 else
-    [ "$platform" != "bcm53xx" ] && curl -s $mirror/openwrt/configs/24-config-common-oprx >> .config
+    #[ "$platform" != "bcm53xx" ] && curl -s $mirror/openwrt/configs/24-config-common >> .config
+	[ "$platform" != "bcm53xx" ] && curl -s $mirror/openwrt/configs/24-config-common-oprx >> .config
     [ "$platform" = "armv8" ] && sed -i '/DOCKER/Id' .config
 fi
 
@@ -492,7 +494,7 @@ if [ "$platform" = "x86_64" ]; then
         mkdir -p ota   #位置是openwrt下。即ota/vermd5
       	#改用md5
 		md5=$(md5sum bin/targets/x86/64/*-generic-squashfs-combined-efi.img.gz | awk '{print $1}')
-        cat > ota/vermd5-oP.txt <<EOF
+        cat > ota/vermd5-oR.txt <<EOF
 $CURRENT_DATE2
 $md5 
 EOF
@@ -517,10 +519,10 @@ fi
 	#sha5=$(egrep -o '[a-z0-9]+' <<< ${SHA256} | cut -c1-5)  #获取前5位
 	SHA256_efi=$(sha256sum bin/targets/x86/64*/*-generic-squashfs-combined-efi.img.gz | awk '{print $1}')
 	sha5_efi=$(egrep -o '[a-z0-9]+' <<< ${SHA256_efi} | cut -c1-5)  #获取前5位
-	#rename -v "s/openwrt-*-efi/OprX-openwrt-x86_64-$OP_VERSION-UEFI-oPstd-Fsquashfs-$sha5/" bin/targets/x86/64*/*.gz || true   #能成功
-	rename -v "s/openwrt-x86-64-generic-squashfs-combined-efi/OprX-openwrt-x86_64-oP-$OP_VERSION-Fsquashfs-uefi-$sha5_efi/" bin/targets/x86/64*/*.gz || true  #能成功
-	#rename -v "s/openwrt-x86-64-generic-ext4-combined-efi/OprX-openwrt-x86_64-oP-$OP_VERSION-Fext4-uefi-$sha5_efi/" bin/targets/x86/64*/*.gz || true  #能成功
-	#rename -v "s/openwrt-x86-64-generic-squashfs-combined/OprX-openwrt-x86_64-oP-$OP_VERSION-Fsquashfs-bios-$sha5/" bin/targets/x86/64*/*.gz || true  #能成功，但一定要在efi后面。
+	#rename -v "s/openwrt-*-efi/OprX-openwrt-x86_64-$OP_VERSION-UEFI-oR-Fsquashfs-$sha5/" bin/targets/x86/64*/*.gz || true   #能成功
+	rename -v "s/openwrt-x86-64-generic-squashfs-combined-efi/OprX-openwrt-x86_64-oR-$OP_VERSION-Fsquashfs-uefi-$sha5_efi/" bin/targets/x86/64*/*.gz || true  #能成功
+	#rename -v "s/openwrt-x86-64-generic-ext4-combined-efi/OprX-openwrt-x86_64-oR-$OP_VERSION-Fext4-uefi-$sha5_efi/" bin/targets/x86/64*/*.gz || true  #能成功
+	#rename -v "s/openwrt-x86-64-generic-squashfs-combined/OprX-openwrt-x86_64-oR-$OP_VERSION-Fsquashfs-bios-$sha5/" bin/targets/x86/64*/*.gz || true  #能成功，但一定要在efi后面。
     
 	# Backup download cache
     if [ "$isCN" = "CN" ] && [ "$1" = "rc2" ]; then
