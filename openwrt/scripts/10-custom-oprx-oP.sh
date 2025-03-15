@@ -734,8 +734,11 @@ rm -rf feeds/luci/applications/luci-app-turboacc
 #rm -rf .gitattributes
 #rm -rf LICENSE
 #cd ../..
+#merge_package master https://github.com/xiangfeidexiaohuo/openwrt-packages.git package/new patch/luci-app-turboacc
 
-merge_package master https://github.com/xiangfeidexiaohuo/openwrt-packages.git package/new patch/luci-app-turboacc
+######turboacc开始=======
+#适配官方openwrt(22.03/23.05/24.10) firewall4的turboacc
+merge_package luci https://github.com/chenmozhijin/turboacc.git package/turboacc luci-app-turboacc
 
 #2、京东签到 By Jerrykuku 作者已关闭了
 #git clone --depth 1 https://github.com/jerrykuku/node-request.git package/new/node-request
