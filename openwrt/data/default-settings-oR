@@ -24,9 +24,9 @@ devices_setup()
             [ -f /sys/kernel/btf/vmlinux ] && [ ! -d "/usr/share/openwrt_core" ] && {
                 #[ "$kernel_version" = "6.12" ] && openwrt_core="oprx-op_core/x86_64" || openwrt_core="kmod-x86_64/main"
                 sed -i '/openwrt_core/d' /etc/opkg/distfeeds.conf
-                #sed -i "\$a\src/gz openwrt_core https://ghfast.top/raw.githubusercontent.com/ilxp/oprx-op_core/x86_64/$(grep Version /usr/lib/opkg/info/kernel.control | awk '{print $2}')" /etc/opkg/distfeeds.conf
-                #sed -i "\$a\src/gz openwrt_core https://raw.kkgithub.com/ilxp/oprx-op_core/x86_64/$(grep Version /usr/lib/opkg/info/kernel.control | awk '{print $2}')" /etc/opkg/distfeeds.conf
-                sed -i "\$a\src/gz openwrt_core https://gh-proxy.com/raw.githubusercontent.com/ilxp/oprx-op_core/x86_64/$(grep Version /usr/lib/opkg/info/kernel.control | awk '{print $2}')" /etc/opkg/distfeeds.conf
+                #sed -i "\$a\src/gz openwrt_core https://ghfast.top/raw.githubusercontent.com/ilxp/oprx-or_core/x86_64/$(grep Version /usr/lib/opkg/info/kernel.control | awk '{print $2}')" /etc/opkg/distfeeds.conf
+                #sed -i "\$a\src/gz openwrt_core https://raw.kkgithub.com/ilxp/oprx-or_core/x86_64/$(grep Version /usr/lib/opkg/info/kernel.control | awk '{print $2}')" /etc/opkg/distfeeds.conf
+                sed -i "\$a\src/gz openwrt_core https://gh-proxy.com/raw.githubusercontent.com/ilxp/oprx-or_core/x86_64/$(grep Version /usr/lib/opkg/info/kernel.control | awk '{print $2}')" /etc/opkg/distfeeds.conf
 			}
         }
         uci set ota.config.api_url="$OTA_URL"

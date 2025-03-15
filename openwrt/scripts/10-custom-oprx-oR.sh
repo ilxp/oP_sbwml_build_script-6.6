@@ -441,6 +441,8 @@ wget -qO- $GEOSITE_URL > package/base-files/files/etc/openclash/GeoSite.dat
 chmod +x package/base-files/files/etc/openclash/core/clash*
 
 # 4、mihomo nikki（只支持firewall4.lede无望）
+rm -rf package/helloworld/luci-app-nikki
+rm -rf package/helloworld/nikki
 git clone --depth=1 https://github.com/nikkinikki-org/OpenWrt-nikki package/diy/OpenWrt-nikki
 sed -i 's/services/vpn/g' package/diy/OpenWrt-nikki/luci-app-nikki/root/usr/share/luci/menu.d/luci-app-nikki.json
 
@@ -647,11 +649,11 @@ merge_package main https://github.com/Lienol/openwrt-package.git package/new luc
 
 #采用我自己的control
 git clone -b main --depth 1 https://github.com/ilxp/openwrt-control  package/diy/openwrt-control
-sed -i 's/Control/管控/g' package/diy/openwrt-control/luci-app-control-webrestriction/luasrc/controller/webrestriction.lua
-sed -i 's/Control/管控/g' package/diy/openwrt-control/luci-app-control-weburl/luasrc/controller/weburl.lua
-sed -i 's/Internet Time Control/上网时间控制/g' package/diy/openwrt-control/luci-app-timecontrol/luasrc/controller/timecontrol.lua
-sed -i 's/Control/管控/g' package/diy/openwrt-control/luci-app-timecontrol/luasrc/controller/timecontrol.lua
-sed -i 's/Control/管控/g' package/diy/openwrt-control/luci-app-control-timewol/luasrc/controller/timewol.lua
+#sed -i 's/Control/管控/g' package/diy/openwrt-control/luci-app-control-webrestriction/luasrc/controller/webrestriction.lua
+#sed -i 's/Control/管控/g' package/diy/openwrt-control/luci-app-control-weburl/luasrc/controller/weburl.lua
+#sed -i 's/Internet Time Control/上网时间控制/g' package/diy/openwrt-control/luci-app-timecontrol/luasrc/controller/timecontrol.lua
+#sed -i 's/Control/管控/g' package/diy/openwrt-control/luci-app-timecontrol/luasrc/controller/timecontrol.lua
+#sed -i 's/Control/管控/g' package/diy/openwrt-control/luci-app-control-timewol/luasrc/controller/timewol.lua
 
 #zxlhhyccc大佬的 修复无法运行问题。
 #时间控制accesscontrol,timecontrol网络唤醒wolplus，访问限制webrestriction， 过滤控制weburl
