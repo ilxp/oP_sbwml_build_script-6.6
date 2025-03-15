@@ -146,7 +146,6 @@ elif [ "$1" = "rc2" ]; then  #最新发布版
     wget -qO- "https://raw.githubusercontent.com/openwrt/openwrt/refs/tags/$latest_release/include/kernel-$kernel_version"  >> kernel.txt
 fi
 
-
 # print version
 echo -e "\r\n${GREEN_COLOR}Building $branch${RES}\r\n"
 if [ "$platform" = "x86_64" ]; then
@@ -294,11 +293,11 @@ bash 03-convert_translation.sh
 bash 04-fix_kmod-6.6.sh
 bash 05-fix-source-6.6.sh
 [ -f "10-custom.sh" ] && bash 10-custom.sh
-[ -f "10-custom-oprx-oP.sh" ] && bash 10-custom-oprx-oR.sh
+[ -f "10-custom-oprx-oR.sh" ] && bash 10-custom-oprx-oR.sh
 find feeds -type f -name "*.orig" -exec rm -f {} \;
 [ "$(whoami)" = "runner" ] && endgroup
 
-rm -f 0*-*.sh 10-custom.sh 10-custom-oprx-oP.sh
+rm -f 0*-*.sh 10-custom.sh 10-custom-oprx-oR.sh
 rm -rf ../master
 
 # Load devices Config
